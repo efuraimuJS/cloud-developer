@@ -1,3 +1,5 @@
+require('dotenv').config()
+// console.log(process.env)
 import express from 'express';
 import { sequelize } from './sequelize';
 
@@ -6,6 +8,7 @@ import { IndexRouter } from './controllers/v0/index.router';
 import bodyParser from 'body-parser';
 
 import { V0MODELS } from './controllers/v0/model.index';
+
 
 (async () => {
   await sequelize.addModels(V0MODELS);
@@ -32,8 +35,14 @@ import { V0MODELS } from './controllers/v0/model.index';
   
 
   // Start the Server
-  app.listen( port, () => {
+  try {
+    app.listen( port, () => {
       console.log( `server running http://localhost:${ port }` );
       console.log( `press CTRL+C to stop server` );
   } );
+  } catch (error) {
+    console.log(`Error occured: ${error}`);
+    
+  }
+  
 })();
